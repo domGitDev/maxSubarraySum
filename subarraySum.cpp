@@ -7,7 +7,7 @@ using namespace std;
 
 
 template<typename T>
-void maxSubarraySum(const auto &arr, const auto &size)
+auto maxSubarraySum(const auto &arr, const auto &size)
 {
     if(arr.size() != size && size <= 0)
         throw std::invalid_argument(
@@ -28,12 +28,14 @@ void maxSubarraySum(const auto &arr, const auto &size)
         max_sum = max(D[1], arr[i]);
         D[0] = D[1];
     }
-    cout<<contig_sum<<" "<<max_sum<<endl;
+    
+    vector<T> max_sums{contig_sum, max_sum};
+    return max_sums;
 }
 
 
 template<typename T>
-vector<T> readInputToArray(const auto &size)
+auto readInputToArray(const auto &size)
 {
     vector<T> values(size);
     for(T i=0; i<size; i++){
@@ -44,7 +46,9 @@ vector<T> readInputToArray(const auto &size)
 
 
 int main() {
-    /* Enter your code here. Read input from STDIN. Print output to STDOUT */   
+    /* Enter your code here. 
+    Read input from STDIN. Print output to STDOUT */   
+    
     unsigned int q;
     long int size;
     
@@ -54,7 +58,9 @@ int main() {
         cin >> size;
         const auto &data = readInputToArray<long>(size);
         if(data.size() == size)
-            maxSubarraySum<long>(data, size);
+            const auto &max_sums = maxSubarraySum<long>(data, size);
+            cout<<max_sums[0]<<" "<<max_sums[1]<<endl;
     }
     return 0;
 }
+
