@@ -30,8 +30,7 @@ auto maxSubarraySum(const auto &arr, const auto &size)
         temp[0] = temp[1];
     }
     
-    vector<T> max_sums{contig_sum, non_contig_sum};
-    return max_sums;
+    return std::make_tuple<T, T> (contig_sum, non_contig_sum);
 }
 
 
@@ -60,7 +59,7 @@ int main() {
         const auto &data = readInputToArray<long>(size);
         if(data.size() == size)
             const auto &max_sums = maxSubarraySum<long>(data, size);
-            cout<<max_sums[0]<<" "<<max_sums[1]<<endl;
+            cout<<std::get<0>(max_sums)<<" "<<std::get<1>(max_sums)<<endl;
     }
     return 0;
 }
