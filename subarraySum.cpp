@@ -8,7 +8,8 @@ using namespace std;
 
 template<typename T>
 auto maxSubarraySum(const auto &arr, const auto &size)
-{
+{ // Compute max contiguous and non contiguous array sum
+    
     if(arr.size() != size && size <= 0)
         throw std::invalid_argument(
             "Vector.size differs from param size");
@@ -16,20 +17,20 @@ auto maxSubarraySum(const auto &arr, const auto &size)
     T contig_sum = arr[0];
     T curr_sum = arr[0];
 
-    T max_sum = arr[0];
-    vector<T> D(2);
-    D[0] = arr[0];
+    T non_contig_sum = arr[0];
+    vector<T> temp(2);
+    temp[0] = arr[0];
 
     for(T i=1; i<size; i++){
         curr_sum = max(arr[i], curr_sum + arr[i]);
         contig_sum = max(curr_sum, contig_sum);
         
-        D[1] = max(D[0], D[0]+arr[i]);
-        max_sum = max(D[1], arr[i]);
-        D[0] = D[1];
+        temp[1] = max(temp[0], temp[0]+arr[i]);
+        non_contig_sum = max(temp[1], arr[i]);
+        temp[0] = temp[1];
     }
     
-    vector<T> max_sums{contig_sum, max_sum};
+    vector<T> max_sums{contig_sum, non_contig_sum};
     return max_sums;
 }
 
